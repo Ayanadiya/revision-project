@@ -3,10 +3,12 @@ import React, {useState} from "react";
 import Card from "../UI/Card";
 import './AddUser.css'
 import Button from "../UI/Button";
+import ErrorModal from "../UI/ErrorModal";
 
 const AddUser = (props) => {
   const [enteredUsername, setUsername] = useState('');
   const [enteredAge, setAge] = useState('')
+  const [error, setError] = useState();
 
   const ageChangeHandler = (event) => {
     setAge(event.target.value);
@@ -23,14 +25,26 @@ const AddUser = (props) => {
       name: enteredUsername,
       age:enteredAge
     }
-    if(enteredUsername.trim().length>0 && enteredAge.trim().length>0 && Number(enteredAge)>0)
+    if(enteredUsername.trim().length===0 || enteredAge.trim().length===0)
     {
-        props.onSaveUser(enteredData);
+      setError({title:"Invalid Input", message:"Please enter a valid username and age (non empty string)."});
+      return 
     }
+    if(Number(enteredAge)<1)
+    {
+      setError({title:"Invalid Input", message:"Please enter a valid age(>0)"})
+      return 
+    }
+    return props.onSaveUser(enteredData);
     setUsername('')
     setAge('')
   }
+  const errorHandler=()=>{
+    setError(null);
+  }
   return (
+    <div>
+    {error && <ErrorModal title={error.title} message={error.message} onConform={errorHandler}/>}
     <Card className="input">
       <form onSubmit={addUserHandler}>
         <div >
@@ -46,6 +60,7 @@ const AddUser = (props) => {
         </div>
       </form>
     </Card>
+    </div>
   )
 }
 
