@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import AddUser from './components/Users/AddUser'
+import UsersList from './components/Users/UsersList'
+import './App.css';
 
 function App() {
   const [users, setUsers] = useState([])
@@ -9,8 +11,9 @@ function App() {
     })
   }
   return (
-    <div>
+    <div className="App">
       <AddUser onSaveUser={saveUserHandler} />
+      <UsersList users={users}/>
     </div>
   );
 }

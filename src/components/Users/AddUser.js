@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import Card from "../UI/Card";
 import './AddUser.css'
 import Button from "../UI/Button";
-import UsersList from "./UsersList";
 
 const AddUser = (props) => {
   const [enteredUsername, setUsername] = useState('');
@@ -20,12 +19,13 @@ const AddUser = (props) => {
   const addUserHandler = (event) => {
     event.preventDefault();
     const enteredData = {
-      username: enteredUsername,
+      id:Math.random().toString(),
+      name: enteredUsername,
       age:enteredAge
     }
     if(enteredUsername.trim().length>0 && enteredAge.trim().length>0 && Number(enteredAge)>0)
     {
-        console.log(enteredData);
+        props.onSaveUser(enteredData);
     }
     setUsername('')
     setAge('')
@@ -45,7 +45,6 @@ const AddUser = (props) => {
         <Button type="submit">Add User</Button>
         </div>
       </form>
-      <UsersList users={[{name:"Max",age:'30'}]}/>
     </Card>
   )
 }
