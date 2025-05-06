@@ -21,7 +21,10 @@ const AddUser = (props) => {
       username: enteredUsername,
       age:enteredAge
     }
-   console.log(enteredData)
+    if(enteredUsername.trim().length>0 && enteredAge.trim().length>0 && Number(enteredAge)>0)
+    {
+        console.log(enteredData);
+    }
     setUsername('')
     setAge('')
   }
